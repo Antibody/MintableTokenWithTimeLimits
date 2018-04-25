@@ -14,7 +14,7 @@ contract MintableToken is StandardToken, Ownable {
    
     string public name;
     string public symbol;
-    uint8 public decimals = 0;
+    uint8 public decimals = 0;  //Don't FORGET to change 
     
 
     
