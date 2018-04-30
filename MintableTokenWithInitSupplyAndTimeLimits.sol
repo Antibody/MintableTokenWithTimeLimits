@@ -1,4 +1,4 @@
-pragma solidity ^0.4.23;
+ragma solidity ^0.4.23;
 
 import "./StandardToken.sol";
 import "./Ownable.sol";
@@ -14,7 +14,7 @@ contract MintableToken is StandardToken, Ownable {
    
     string public name;
     string public symbol;
-    uint8 public decimals = 0;  //Don't FORGET to change 
+    uint8 public decimals = 0;
     
 
     
@@ -25,6 +25,16 @@ contract MintableToken is StandardToken, Ownable {
   }
 
 
+ function getTime() public returns (uint256){                   // Returns current time. Check VISIBILITY (=> internal) 
+        return now;
+        
+    }
+    
+    function mintUnlocked() internal returns (bool) {           // Checks if current time is greater than set time 
+    // return (getTime() >= 1525094508);                           // 04/30/2018 @ 1:21pm (UTC) in this case
+    return (getTime() >= 1525215600);                              // 05/01/2018 @ 11:00pm (UTC). This should not allow miniting today on April 30th
+  }
+
   /**
    * @dev Function to mint tokens
    * @param _to The address that will receive the minted tokens.
@@ -32,6 +42,9 @@ contract MintableToken is StandardToken, Ownable {
    * @return A boolean that indicates if the operation was successful.
    */
   function mint(address _to, uint256 _amount) onlyOwner canMint public returns (bool) {
+      
+    require (mintUnlocked());
+    
     totalSupply_ = totalSupply_.add(_amount);
     balances[_to] = balances[_to].add(_amount);
     emit Mint(_to, _amount);
@@ -49,18 +62,24 @@ contract MintableToken is StandardToken, Ownable {
     return true;
   }
   
+ 
+    
    /**
    * Gives name and symbol
-   * Use "" with string
+   * Use " " with the string
    */
   constructor (
         string tokenName,
-        string tokenSymbol
+        string tokenSymbol,
+        uint256 initialSupply
     ) public {
         name = tokenName;                                   
-        symbol = tokenSymbol;                              
+        symbol = tokenSymbol;
+        totalSupply_ = initialSupply;
+        balances[owner] = totalSupply_;
     }
     
+  
     /**
    * This function allows to destroy tokens 
       */
@@ -72,19 +91,5 @@ contract MintableToken is StandardToken, Ownable {
         return true;
     }
 
-    /**
-     * Destroy tokens from other account
-     * NOT SURE IF NEEDED
-     *  SMTH LIKE This:
-     *  function burnFrom(address _from, uint256 _value) public returns (bool success) {
-        require(balances[_from] >= _value);                
-        require(_value <= allowance[_from][msg.sender]);    
-        balances[_from] -= _value;                         
-        allowance[_from][owner] -= _value;             
-        totalSupply_ -= _value;                              
-        emit Burn(_from, _value);
-        return true;
-    }
-     */
    
 }
