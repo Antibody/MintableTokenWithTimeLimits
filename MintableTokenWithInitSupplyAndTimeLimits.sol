@@ -1,4 +1,4 @@
-ragma solidity ^0.4.23;
+pragma solidity ^0.4.23;
 
 import "./StandardToken.sol";
 import "./Ownable.sol";
