@@ -65,8 +65,8 @@ contract MintableToken is StandardToken, Ownable {
     return true;
     }
   
-function timer() internal returns (bool) {       // checks if intervalTime has elapsed, if so returns "true", required for the mint function
-     return (currentTime <= now);
+function timer() internal view returns (bool) {       // checks if intervalTime has elapsed, if so returns "true", required for the mint function. Decide on VIEW vs PURE
+     return (currentTime <= now);                      
     }
 
   /**
