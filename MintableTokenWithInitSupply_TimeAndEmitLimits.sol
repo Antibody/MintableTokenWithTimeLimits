@@ -27,17 +27,19 @@ contract MintableToken is StandardToken, Ownable {
 
  /**
   Not sure we need the following two functions for setting a moratorium on minitng process start
-   */
+   
   
-  // function getTime() public returns (uint256){                 // Returns current time. Check VISIBILITY 
-   // return now;
-    //}
+  function getTime() public returns (uint256){                 // Returns current time. Check VISIBILITY 
+    return now;
+    }
  
  
-  //function mintUnlocked() internal returns (bool) {           // Checks if current time is greater than set time that would be allowed for minint start 
-    //return (getTime() >= 1525113448);                         // 04/30/2018 @ 1:21pm (UTC) in this case. Expresed as UNIX time
-    //return (getTime() >= 1525215600);                       // 05/01/2018 @ 11:00pm (UTC). This should block miniting till the  evening of May 1st, if uncommented and upper line deleted
-    //}
+  function mintUnlocked() internal returns (bool) {           // Checks if current time is greater than set time that would be allowed for minint start 
+    return (getTime() >= 1525113448);                         // 04/30/2018 @ 1:21pm (UTC) in this case. Expresed as UNIX time
+    return (getTime() >= 1525215600);                       // 05/01/2018 @ 11:00pm (UTC). This should block miniting till the  evening of May 1st, if uncommented and upper line deleted
+    }
+    
+    */
 
   /**
    * Function to MINT new tokens
